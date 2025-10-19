@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SimBench: Benchmarking LLM Human Behavior Simulation</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <i class="fas fa-users"></i>
+                SimBench
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html" class="active">Home</a></li>
+                <li><a href="explorer.html">Results Explorer</a></li>
+                <li><a href="https://github.com/pitehu/SimBench_release" target="_blank">
+                    <i class="fab fa-github"></i> GitHub
+                </a></li>
+                <li><a href="https://huggingface.co/datasets/pitehu/SimBench" target="_blank">
+                    <i class="fas fa-database"></i> Hugging Face
+                </a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <div class="container">
+            <h1 class="hero-title">SimBench</h1>
+            <p class="hero-subtitle">The First Large-Scale Benchmark for Simulating Human Behavior with LLMs</p>
+            <div class="hero-buttons">
+                <a href="explorer.html" class="btn btn-primary">
+                    <i class="fas fa-chart-bar"></i> Explore Results
+                </a>
+                <a href="https://arxiv.org/abs/XXXX.XXXXX" class="btn btn-secondary" target="_blank">
+                    <i class="fas fa-file-pdf"></i> Read Paper
+                </a>
+                <a href="https://github.com/pitehu/SimBench_release" class="btn btn-secondary" target="_blank">
+                    <i class="fab fa-github"></i> View Code
+                </a>
+                <a href="https://huggingface.co/datasets/pitehu/SimBench" class="btn btn-secondary" target="_blank">
+                    <i class="fas fa-database"></i> Dataset
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <section class="overview-visual">
+        <div class="container">
+            <div class="visual-grid">
+                <div class="visual-card">
+                    <h3><i class="fas fa-database"></i> 20 Datasets</h3>
+                    <p>We combine <strong>20 datasets</strong> in a unified format covering diverse domains:</p>
+                    <div class="dataset-tags">
+                        <span class="tag">ChaosNLI</span>
+                        <span class="tag">MoralMachine</span>
+                        <span class="tag">Choices13k</span>
+                        <span class="tag">AfroBarometer</span>
+                        <span class="tag">OpinionQA</span>
+                        <span class="tag">OSPsychBig5</span>
+                        <span class="tag">NumberGame</span>
+                        <span class="tag">DICES990</span>
+                        <span class="tag">WisdomOfCrowds</span>
+                        <span class="tag">Jester</span>
+                        <span class="tag">LatinoBarometro</span>
+                        <span class="tag">ISSP</span>
+                        <span class="tag-more">...and more</span>
+                    </div>
+                </div>
+                
+                <div class="visual-card example-card">
+                    <h3><i class="fas fa-question-circle"></i> Multiple-Choice Questions</h3>
+                    <div class="example-question">
+                        <div class="question-box">
+                            <p class="question-text">A train will kill 5 people on the track. You can flip a switch to divert the train to a side track where it will kill just 2 people.</p>
+                            <p class="question-prompt"><strong>What do you do?</strong></p>
+                            <div class="options">
+                                <div class="option"><strong>A:</strong> Flip the switch</div>
+                                <div class="option"><strong>B:</strong> Do nothing</div>
+                            </div>
+                        </div>
+                        <p class="caption">Each dataset contains multiple-choice questions.</p>
+                    </div>
+                </div>
+                
+                <div class="visual-card">
+                    <h3><i class="fas fa-users"></i> Group-Level Responses</h3>
+                    <p>We test the ability of LLMs to simulate <strong>group-level response distributions</strong> by comparing model predictions against human ground truth.</p>
+                    <div class="comparison-visual">
+                        <div class="comparison-group">
+                            <div class="group-label">Human Ground Truth</div>
+                            <div class="group-avatars">
+                                <span class="avatar">👨🏻</span>
+                                <span class="avatar">👩🏼</span>
+                                <span class="avatar">👨🏽</span>
+                            </div>
+                            <div class="mini-bars">
+                                <div class="mini-bar">
+                                    <div class="bar-section bar-human-a" style="width: 60%"></div>
+                                    <div class="bar-section bar-human-b" style="width: 40%"></div>
+                                </div>
+                                <div class="bar-labels"><span>A: 60%</span><span>B: 40%</span></div>
+                            </div>
+                        </div>
+                        <div class="vs-divider">→</div>
+                        <div class="comparison-group">
+                            <div class="group-label">LLM Prediction</div>
+                            <div class="group-icon">
+                                <i class="fas fa-robot"></i>
+                            </div>
+                            <div class="mini-bars">
+                                <div class="mini-bar">
+                                    <div class="bar-section bar-model-a" style="width: 55%"></div>
+                                    <div class="bar-section bar-model-b" style="width: 45%"></div>
+                                </div>
+                                <div class="bar-labels"><span>A: 55%</span><span>B: 45%</span></div>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="comparison-note"><i class="fas fa-chart-line"></i> We measure how closely LLM predictions match human response distributions</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">Overview</h2>
+            <p class="lead">
+                Large language model (LLM) simulations of human behavior have the potential to revolutionize 
+                the social and behavioral sciences, <strong>if and only if</strong> they faithfully reflect 
+                real human behaviors. Current evaluations are fragmented, based on bespoke tasks and metrics, 
+                creating a patchwork of incomparable results.
+            </p>
+            <p>
+                To address this, we introduce <strong>SimBench</strong>, the first large-scale, standardized 
+                benchmark for a robust, reproducible science of LLM simulation. By unifying <strong>20 diverse 
+                datasets</strong> covering tasks from moral decision-making to economic choice across a large 
+                global participant pool, SimBench provides the necessary foundation to ask fundamental questions 
+                about when, how, and why LLM simulations succeed or fail.
+            </p>
+        </div>
+    </section>
+
+    <section class="section bg-light">
+        <div class="container">
+            <h2 class="section-title">Key Findings</h2>
+            <div class="findings-grid">
+                <div class="finding-card">
+                    <div class="finding-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3>Limited Current Performance</h3>
+                    <p>Even the best LLMs today have limited simulation ability, with a top score of 40.80/100, though performance scales log-linearly with model size.</p>
+                </div>
+                <div class="finding-card">
+                    <div class="finding-icon">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <h3>No Benefit from Inference-Time Compute</h3>
+                    <p>Simulation performance is not improved by increased inference-time compute or Chain-of-Thought prompting.</p>
+                </div>
+                <div class="finding-card">
+                    <div class="finding-icon">
+                        <i class="fas fa-balance-scale"></i>
+                    </div>
+                    <h3>Alignment-Simulation Trade-off</h3>
+                    <p>Instruction-tuning improves performance on low-entropy (consensus) questions but degrades it on high-entropy (diverse) ones.</p>
+                </div>
+                <div class="finding-card">
+                    <div class="finding-icon">
+                        <i class="fas fa-users-cog"></i>
+                    </div>
+                    <h3>Demographic Disparities</h3>
+                    <p>Models particularly struggle when simulating specific demographic groups, especially those defined by religion and ideology.</p>
+                </div>
+                <div class="finding-card">
+                    <div class="finding-icon">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <h3>Strong Correlation with Knowledge</h3>
+                    <p>Simulation ability correlates most strongly with deep, knowledge-intensive reasoning (MMLU-Pro, r=0.939).</p>
+                </div>
+                <div class="finding-card">
+                    <div class="finding-icon">
+                        <i class="fas fa-globe"></i>
+                    </div>
+                    <h3>Global Diversity</h3>
+                    <p>SimBench includes participants from 130+ countries across six continents, enabling evaluation of diverse cultural contexts.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">Benchmark Splits</h2>
+            <div class="splits-container">
+                <div class="split-card">
+                    <h3><i class="fas fa-globe-americas"></i> SimBenchPop</h3>
+                    <div class="split-stats">
+                        <span class="stat-badge">7,167 test cases</span>
+                        <span class="stat-badge">20 datasets</span>
+                    </div>
+                    <p>
+                        Measures the ability of LLMs to simulate responses of <strong>broad and diverse 
+                        human populations</strong>. Each test case uses the dataset-specific default 
+                        grouping (e.g., "US-based Amazon Mechanical Turk workers").
+                    </p>
+                </div>
+                <div class="split-card">
+                    <h3><i class="fas fa-users"></i> SimBenchGrouped</h3>
+                    <div class="split-stats">
+                        <span class="stat-badge">6,343 test cases</span>
+                        <span class="stat-badge">5 survey datasets</span>
+                    </div>
+                    <p>
+                        Measures the ability of LLMs to simulate responses from <strong>specific participant 
+                        groups</strong> defined by demographics (e.g., age, gender, ideology). Uses large-scale 
+                        survey datasets with rich sociodemographic information.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section bg-light">
+        <div class="container">
+            <h2 class="section-title">Dataset Properties</h2>
+            <div class="properties-grid">
+                <div class="property-card">
+                    <h3><i class="fas fa-tasks"></i> Task Diversity</h3>
+                    <ul>
+                        <li><strong>Decision-Making:</strong> Hypothetical action selection (e.g., MoralMachine, Choices13k)</li>
+                        <li><strong>Self-Assessment:</strong> Personal attribute evaluation (e.g., OpinionQA, OSPsychBig5)</li>
+                        <li><strong>Judgment:</strong> External object labeling (e.g., ChaosNLI, Jester)</li>
+                        <li><strong>Problem-Solving:</strong> Factual question answering (e.g., WisdomOfCrowds, OSPsychMGKT)</li>
+                    </ul>
+                </div>
+                <div class="property-card">
+                    <h3><i class="fas fa-globe"></i> Participant Diversity</h3>
+                    <ul>
+                        <li><strong>130+</strong> countries across six continents</li>
+                        <li><strong>3 datasets</strong> exclusively from non-US regions</li>
+                        <li><strong>4 datasets</strong> with multi-country samples</li>
+                        <li><strong>8 datasets</strong> using representative sampling</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">Get Started</h2>
+            <div class="getting-started">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>Download the Data</h3>
+                    <p>Access SimBench on Hugging Face to download the benchmark splits.</p>
+                    <a href="https://huggingface.co/datasets/pitehu/SimBench" class="btn btn-sm" target="_blank">
+                        <i class="fas fa-download"></i> Download Dataset
+                    </a>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>Clone the Repository</h3>
+                    <p>Get the evaluation scripts and tools from our GitHub repository.</p>
+                    <code class="code-block">git clone https://github.com/pitehu/SimBench_release.git</code>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>Run Evaluation</h3>
+                    <p>Use the provided scripts to evaluate your LLM's simulation capabilities.</p>
+                    <code class="code-block">python generate_answers.py --input_file SimBenchPop.pkl --output_file results.pkl --model_name your-model</code>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <h3>Explore Results</h3>
+                    <p>Upload your results to our interactive explorer to visualize and analyze performance.</p>
+                    <a href="explorer.html" class="btn btn-sm">
+                        <i class="fas fa-chart-bar"></i> Open Explorer
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section bg-light">
+        <div class="container">
+            <h2 class="section-title">Citation</h2>
+            <div class="citation-box">
+                <pre><code>@article{hu2025simbench,
+  title={SimBench: Benchmarking the Ability of Large Language Models to Simulate Human Behaviors},
+  author={Hu, Tiancheng and others},
+  journal={arXiv preprint arXiv:XXXX.XXXXX},
+  year={2025}
+}</code></pre>
+            </div>
+            
+            <div class="contact-info-section">
+                <h3 class="contact-title"><i class="fas fa-envelope"></i> Contact Information</h3>
+                <p class="contact-text">
+                    For questions, feedback, or collaboration opportunities, please contact:
+                </p>
+                <div class="contact-details">
+                    <p class="contact-author">
+                        <strong>Tiancheng Hu</strong><br>
+                        <a href="https://tiancheng.hu/" target="_blank" rel="noopener noreferrer">
+                            <i class="fas fa-globe"></i> tiancheng.hu
+                        </a><br>
+                        <span class="email-protected" data-user="th656" data-domain="cam.ac.uk"></span>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <p>&copy; 2025 SimBench. Licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a>.</p>
+                </div>
+                <div class="footer-links">
+                    <a href="https://github.com/pitehu/SimBench_release" target="_blank">
+                        <i class="fab fa-github"></i> GitHub
+                    </a>
+                    <a href="https://huggingface.co/datasets/pitehu/SimBench" target="_blank">
+                        <i class="fas fa-database"></i> Hugging Face
+                    </a>
+                    <a href="https://arxiv.org/abs/XXXX.XXXXX" target="_blank">
+                        <i class="fas fa-file-pdf"></i> Paper
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Anti-scraper email protection
+        document.addEventListener('DOMContentLoaded', function() {
+            const emailElements = document.querySelectorAll('.email-protected');
+            emailElements.forEach(function(el) {
+                const user = el.getAttribute('data-user');
+                const domain = el.getAttribute('data-domain');
+                const email = user + '@' + domain;
+                el.innerHTML = '<a href="mailto:' + email + '">' + email + '</a>';
+            });
+        });
+    </script>
+
+</body>
+</html>

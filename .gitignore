@@ -1,0 +1,37 @@
+# Python
+*.pyc
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+*.egg-info/
+
+# Data files
+*.pkl
+*.csv
+*.parquet
+
+# Output files
+sample_results.json
+results.json
+
+# OS files
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+
+# IDE
+.vscode/
+.idea/
+*.sublime-*
+
+# Logs
+*.log
+
+# Don't ignore sample data in specific locations
+!data/sample_results.json

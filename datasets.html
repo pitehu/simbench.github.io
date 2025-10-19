@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Datasets - SimBench</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <i class="fas fa-users"></i>
+                SimBench
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="explorer.html">Results Explorer</a></li>
+                <li><a href="datasets.html" class="active">Datasets</a></li>
+                <li><a href="https://github.com/pitehu/SimBench_release" target="_blank">
+                    <i class="fab fa-github"></i> GitHub
+                </a></li>
+                <li><a href="https://huggingface.co/datasets/pitehu/SimBench" target="_blank">
+                    <i class="fas fa-database"></i> Hugging Face
+                </a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="datasets-container">
+        <div class="container">
+            <h1 class="page-title">
+                <i class="fas fa-database"></i> SimBench Datasets
+            </h1>
+                <p>SimBench aggregates many datasets across survey questions, behavioral tasks, and psychometric scales. Below is a (non-exhaustive) listing of datasets included or referenced in the project. If you want a machine-readable manifest, place a processed JSON in <code>website/data/</code> and the explorer will load it.</p>
+
+                <h3>Included / referenced datasets (examples)</h3>
+                <ol>
+                    <li>GlobalOpinionQA</li>
+                    <li>BIG5</li>
+                    <li>ESS</li>
+                    <li>Jester</li>
+                    <li>MACH</li>
+                    <li>DICES</li>
+                    <li>Conspiracy_Correlates</li>
+                    <li>GlobalOpinionQA (regional splits)</li>
+                    <li>WisdomOfCrowds</li>
+                    <li>OpinionQA</li>
+                    <li>MoralMachine</li>
+                    <li>Political_Affiliation_Survey</li>
+                    <li>Voter_Preferences</li>
+                    <li>Health_Choices</li>
+                    <li>Economic_Preferences</li>
+                    <li>Risk_Taking_Tasks</li>
+                    <li>Social_Trust_Scales</li>
+                    <li>Demographics_Survey</li>
+                    <li>Behavioral_Games</li>
+                    <li>Custom_Local_Surveys</li>
+                </ol>
+
+                <p>If you'd prefer the canonical list from our paper or the lab notebook, tell me and I will update this page to exactly match the published manifest.</p>
+            </p>
+
+            <div class="dataset-categories">
+                <h2 class="section-title">Task Categories</h2>
+                <div class="category-grid">
+                    <div class="category-card">
+                        <div class="category-icon decision-making">
+                            <i class="fas fa-random"></i>
+                        </div>
+                        <h3>Decision-Making</h3>
+                        <p>Hypothetical action selection tasks where participants choose what they would do in various scenarios.</p>
+                        <div class="dataset-tags">
+                            <span class="tag">MoralMachine</span>
+                            <span class="tag">Choices13k</span>
+                        </div>
+                    </div>
+                    <div class="category-card">
+                        <div class="category-icon self-assessment">
+                            <i class="fas fa-user-check"></i>
+                        </div>
+                        <h3>Self-Assessment</h3>
+                        <p>Questions where participants evaluate their own attributes, beliefs, or characteristics.</p>
+                        <div class="dataset-tags">
+                            <span class="tag">OpinionQA</span>
+                            <span class="tag">OSPsychBig5</span>
+                            <span class="tag">ISSP</span>
+                        </div>
+                    </div>
+                    <div class="category-card">
+                        <div class="category-icon judgment">
+                            <i class="fas fa-gavel"></i>
+                        </div>
+                        <h3>Judgment</h3>
+                        <p>External object labeling tasks where participants classify or evaluate stimuli.</p>
+                        <div class="dataset-tags">
+                            <span class="tag">ChaosNLI</span>
+                            <span class="tag">Jester</span>
+                        </div>
+                    </div>
+                    <div class="category-card">
+                        <div class="category-icon problem-solving">
+                            <i class="fas fa-lightbulb"></i>
+                        </div>
+                        <h3>Problem-Solving</h3>
+                        <p>Factual questions where participants select the answer they believe is correct.</p>
+                        <div class="dataset-tags">
+                            <span class="tag">WisdomOfCrowds</span>
+                            <span class="tag">OSPsychMGKT</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="geographic-coverage">
+                <h2 class="section-title">Geographic Coverage</h2>
+                <div class="geo-stats">
+                    <div class="geo-stat">
+                        <i class="fas fa-globe-americas"></i>
+                        <h3>130+</h3>
+                        <p>Countries</p>
+                    </div>
+                    <div class="geo-stat">
+                        <i class="fas fa-map"></i>
+                        <h3>6</h3>
+                        <p>Continents</p>
+                    </div>
+                    <div class="geo-stat">
+                        <i class="fas fa-users"></i>
+                        <h3>8</h3>
+                        <p>Representative Samples</p>
+                    </div>
+                </div>
+                <div class="geo-details">
+                    <div class="geo-detail-card">
+                        <h4><i class="fas fa-flag"></i> Regional Datasets</h4>
+                        <p><strong>3 datasets</strong> exclusively feature participants from regions outside the US:</p>
+                        <ul>
+                            <li>LatinoBarometro (Latin America)</li>
+                            <li>AfroBarometer (Africa)</li>
+                            <li>ESS (Europe)</li>
+                        </ul>
+                    </div>
+                    <div class="geo-detail-card">
+                        <h4><i class="fas fa-globe"></i> Multi-Country Datasets</h4>
+                        <p><strong>4 datasets</strong> draw from multi-country samples across continents:</p>
+                        <ul>
+                            <li>GlobalOpinionQA</li>
+                            <li>TISP</li>
+                            <li>ISSP</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="all-datasets">
+                <h2 class="section-title">All 20 Datasets</h2>
+                <div class="datasets-table-container">
+                    <table class="datasets-table">
+                        <thead>
+                            <tr>
+                                <th>Dataset</th>
+                                <th>Task Type</th>
+                                <th>Participants</th>
+                                <th>Questions</th>
+                                <th>Geographic Scope</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>OpinionQA</strong></td>
+                                <td><span class="badge self-assessment">Self-Assessment</span></td>
+                                <td>~1,500</td>
+                                <td>1,498</td>
+                                <td>United States</td>
+                            </tr>
+                            <tr>
+                                <td><strong>GlobalOpinionQA</strong></td>
+                                <td><span class="badge self-assessment">Self-Assessment</span></td>
+                                <td>~50,000</td>
+                                <td>1,498</td>
+                                <td>Global (130+ countries)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>AfroBarometer</strong></td>
+                                <td><span class="badge self-assessment">Self-Assessment</span></td>
+                                <td>~53,000</td>
+                                <td>180</td>
+                                <td>Africa (34 countries)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>LatinoBarometro</strong></td>
+                                <td><span class="badge self-assessment">Self-Assessment</span></td>
+                                <td>~20,000</td>
+                                <td>150</td>
+                                <td>Latin America (18 countries)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>ESS</strong></td>
+                                <td><span class="badge self-assessment">Self-Assessment</span></td>
+                                <td>~44,000</td>
+                                <td>200</td>
+                                <td>Europe (30 countries)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>ISSP</strong></td>
+                                <td><span class="badge self-assessment">Self-Assessment</span></td>
+                                <td>~45,000</td>
+                                <td>120</td>
+                                <td>Global (45 countries)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>MoralMachine</strong></td>
+                                <td><span class="badge decision-making">Decision-Making</span></td>
+                                <td>~2.3M</td>
+                                <td>100</td>
+                                <td>Global</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Choices13k</strong></td>
+                                <td><span class="badge decision-making">Decision-Making</span></td>
+                                <td>~500</td>
+                                <td>13,000</td>
+                                <td>United States</td>
+                            </tr>
+                            <tr>
+                                <td><strong>ChaosNLI</strong></td>
+                                <td><span class="badge judgment">Judgment</span></td>
+                                <td>~100 per question</td>
+                                <td>4,645</td>
+                                <td>Global (crowdworkers)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Jester</strong></td>
+                                <td><span class="badge judgment">Judgment</span></td>
+                                <td>~24,000</td>
+                                <td>100</td>
+                                <td>Global (internet users)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>WisdomOfCrowds</strong></td>
+                                <td><span class="badge problem-solving">Problem-Solving</span></td>
+                                <td>~2,000</td>
+                                <td>50</td>
+                                <td>United States</td>
+                            </tr>
+                            <tr>
+                                <td><strong>OSPsychMGKT</strong></td>
+                                <td><span class="badge problem-solving">Problem-Solving</span></td>
+                                <td>~500</td>
+                                <td>45</td>
+                                <td>United States</td>
+                            </tr>
+                            <tr>
+                                <td><strong>OSPsychBig5</strong></td>
+                                <td><span class="badge self-assessment">Self-Assessment</span></td>
+                                <td>~19,000</td>
+                                <td>50</td>
+                                <td>Global</td>
+                            </tr>
+                            <tr>
+                                <td><strong>TISP</strong></td>
+                                <td><span class="badge self-assessment">Self-Assessment</span></td>
+                                <td>~10,000</td>
+                                <td>80</td>
+                                <td>Multi-country</td>
+                            </tr>
+                            <!-- Additional datasets can be added here -->
+                        </tbody>
+                    </table>
+                </div>
+                <p class="table-note">
+                    <i class="fas fa-info-circle"></i> 
+                    For complete dataset details including example questions and demographics, see Appendix in the paper.
+                </p>
+            </div>
+
+            <div class="data-format">
+                <h2 class="section-title">Data Format</h2>
+                <p>All datasets have been standardized into a unified format with the following fields:</p>
+                <div class="format-grid">
+                    <div class="format-card">
+                        <code>dataset_name</code>
+                        <p>Name of the original dataset</p>
+                    </div>
+                    <div class="format-card">
+                        <code>group_prompt_template</code>
+                        <p>Persona/grouping instruction template</p>
+                    </div>
+                    <div class="format-card">
+                        <code>group_prompt_variable_map</code>
+                        <p>Variables to fill into the persona template</p>
+                    </div>
+                    <div class="format-card">
+                        <code>input_template</code>
+                        <p>The question text</p>
+                    </div>
+                    <div class="format-card">
+                        <code>human_answer</code>
+                        <p>Dictionary of option labels and human response proportions</p>
+                    </div>
+                    <div class="format-card">
+                        <code>group_size</code>
+                        <p>Number of human respondents</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="download-section">
+                <h2 class="section-title">Download SimBench</h2>
+                <div class="download-cards">
+                    <div class="download-card">
+                        <i class="fas fa-database"></i>
+                        <h3>Hugging Face Datasets</h3>
+                        <p>Access the full benchmark with easy-to-use Python API</p>
+                        <a href="https://huggingface.co/datasets/pitehu/SimBench" class="btn btn-primary" target="_blank">
+                            <i class="fas fa-download"></i> Download from HF
+                        </a>
+                    </div>
+                    <div class="download-card">
+                        <i class="fab fa-github"></i>
+                        <h3>GitHub Repository</h3>
+                        <p>Get evaluation scripts and processing tools</p>
+                        <a href="https://github.com/pitehu/SimBench_release" class="btn btn-secondary" target="_blank">
+                            <i class="fab fa-github"></i> View Repository
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 SimBench. Licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a>.</p>
+        </div>
+    </footer>
+</body>
+</html>
