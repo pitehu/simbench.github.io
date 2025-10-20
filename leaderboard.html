@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SimBench Leaderboard</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .leaderboard-container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 2rem;
+        }
+
+        .leaderboard-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .leaderboard-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            color: #2c3e50;
+        }
+
+        .leaderboard-header p {
+            font-size: 1.1rem;
+            color: #7f8c8d;
+        }
+
+        .filters-container {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .filter-group label {
+            font-weight: 600;
+            color: #2c3e50;
+            font-size: 0.9rem;
+        }
+
+        .filter-group select {
+            padding: 0.5rem 1rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+            background: white;
+            cursor: pointer;
+            min-width: 200px;
+        }
+
+        .leaderboard-table-container {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .leaderboard-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .leaderboard-table thead {
+            background: #3498db;
+            color: white;
+        }
+
+        .leaderboard-table th {
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 0.5px;
+        }
+
+        .leaderboard-table th.rank-col {
+            width: 80px;
+            text-align: center;
+        }
+
+        .leaderboard-table th.score-col {
+            width: 120px;
+            text-align: center;
+        }
+
+        .leaderboard-table th.type-col {
+            width: 100px;
+        }
+
+        .leaderboard-table th.release-col {
+            width: 100px;
+        }
+
+        .leaderboard-table tbody tr {
+            border-bottom: 1px solid #ecf0f1;
+            transition: background-color 0.2s;
+        }
+
+        .leaderboard-table tbody tr:hover {
+            background-color: #f8f9fa;
+        }
+
+        .leaderboard-table tbody tr.striped {
+            background-color: #f8f9fa;
+        }
+
+        .leaderboard-table tbody tr.striped:hover {
+            background-color: #ecf0f1;
+        }
+
+        .leaderboard-table tbody tr.below-baseline {
+            opacity: 0.6;
+        }
+
+        .leaderboard-table tbody tr.below-baseline td {
+            border-top: 2px dashed #95a5a6;
+        }
+
+        .leaderboard-table td {
+            padding: 1rem;
+        }
+
+        .rank-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        .rank-badge.gold {
+            background: linear-gradient(135deg, #ffd700, #ffed4e);
+            color: #7d6608;
+        }
+
+        .rank-badge.silver {
+            background: linear-gradient(135deg, #c0c0c0, #e8e8e8);
+            color: #5a5a5a;
+        }
+
+        .rank-badge.bronze {
+            background: linear-gradient(135deg, #cd7f32, #e8a462);
+            color: #5a3a1a;
+        }
+
+        .rank-badge.regular {
+            background: #ecf0f1;
+            color: #7f8c8d;
+        }
+
+        .model-name {
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .model-name.reasoning {
+            font-style: italic;
+        }
+
+        .score-value {
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: #27ae60;
+        }
+
+        .score-value.negative {
+            color: #e74c3c;
+        }
+
+        .type-badge {
+            display: inline-block;
+            padding: 0.3rem 0.8rem;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .type-badge.instruct {
+            background-color: #3498db;
+            color: white;
+        }
+
+        .type-badge.base {
+            background-color: #95a5a6;
+            color: white;
+        }
+
+        .release-badge {
+            display: inline-block;
+            padding: 0.3rem 0.8rem;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .release-badge.open {
+            background-color: #27ae60;
+            color: white;
+        }
+
+        .release-badge.closed {
+            background-color: #e67e22;
+            color: white;
+        }
+
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .stat-card .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #3498db;
+        }
+
+        .stat-card .stat-label {
+            font-size: 0.9rem;
+            color: #7f8c8d;
+            margin-top: 0.5rem;
+        }
+
+        .note-box {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 1rem;
+            margin-top: 2rem;
+            border-radius: 4px;
+        }
+
+        .note-box p {
+            margin: 0.5rem 0;
+            color: #856404;
+        }
+
+        @media (max-width: 768px) {
+            .leaderboard-table {
+                font-size: 0.85rem;
+            }
+
+            .leaderboard-table th,
+            .leaderboard-table td {
+                padding: 0.5rem;
+            }
+
+            .filters-container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .filter-group select {
+                min-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <i class="fas fa-users"></i>
+                SimBench
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="explorer.html">Results Explorer</a></li>
+                <li><a href="leaderboard.html" class="active">Leaderboard</a></li>
+                <li><a href="https://github.com/pitehu/SimBench_release" target="_blank">
+                    <i class="fab fa-github"></i> GitHub
+                </a></li>
+                <li><a href="https://huggingface.co/datasets/pitehu/SimBench" target="_blank">
+                    <i class="fas fa-database"></i> Hugging Face
+                </a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="leaderboard-container">
+        <div class="leaderboard-header">
+            <h1><i class="fas fa-trophy"></i> SimBench Leaderboard</h1>
+            <p>Overall simulation ability measured by SimBench score averaged across the two main splits</p>
+        </div>
+
+        <div class="stats-container" id="statsContainer">
+            <div class="stat-card">
+                <div class="stat-value" id="totalModels">45</div>
+                <div class="stat-label">Total Models</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="topScore">40.80</div>
+                <div class="stat-label">Top Score</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="avgScore">12.7</div>
+                <div class="stat-label">Average Score</div>
+            </div>
+        </div>
+
+        <div class="filters-container">
+            <div class="filter-group">
+                <label for="typeFilter"><i class="fas fa-filter"></i> Model Type</label>
+                <select id="typeFilter">
+                    <option value="all">All Types</option>
+                    <option value="Instr.">Instruction-tuned</option>
+                    <option value="Base">Base Models</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label for="releaseFilter"><i class="fas fa-filter"></i> Release Type</label>
+                <select id="releaseFilter">
+                    <option value="all">All Releases</option>
+                    <option value="Open">Open</option>
+                    <option value="Closed">Closed</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label for="sortFilter"><i class="fas fa-sort"></i> Sort By</label>
+                <select id="sortFilter">
+                    <option value="score">Score (Descending)</option>
+                    <option value="score-asc">Score (Ascending)</option>
+                    <option value="name">Model Name (A-Z)</option>
+                    <option value="name-desc">Model Name (Z-A)</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="leaderboard-table-container">
+            <table class="leaderboard-table">
+                <thead>
+                    <tr>
+                        <th class="rank-col">Rank</th>
+                        <th>Model</th>
+                        <th class="type-col">Type</th>
+                        <th class="release-col">Release</th>
+                        <th class="score-col">Score (S ↑)</th>
+                    </tr>
+                </thead>
+                <tbody id="leaderboardBody">
+                    <!-- Table rows will be inserted here by JavaScript -->
+                </tbody>
+            </table>
+        </div>
+
+        <div class="note-box">
+            <p><strong>Note:</strong> Reasoning models are highlighted in <em>italics</em>.</p>
+            <p><strong>Baseline:</strong> Models below the dotted line perform worse than a uniform baseline.</p>
+            <p><strong>Score Range:</strong> SimBench scores range from -∞ to 100, with higher scores indicating better simulation ability.</p>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <p>&copy; 2025 SimBench. Licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a>.</p>
+                </div>
+                <div class="footer-links">
+                    <a href="https://github.com/pitehu/SimBench_release" target="_blank">
+                        <i class="fab fa-github"></i> GitHub
+                    </a>
+                    <a href="https://huggingface.co/datasets/pitehu/SimBench" target="_blank">
+                        <i class="fas fa-database"></i> Hugging Face
+                    </a>
+                    <a href="https://arxiv.org/abs/XXXX.XXXXX" target="_blank">
+                        <i class="fas fa-file-pdf"></i> Paper
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Data from Table 7 (tab:total_variation_main_expanded)
+        const leaderboardData = [
+            { rank: 1, model: "Claude-3.7-Sonnet", type: "Instr.", release: "Closed", score: 40.80, reasoning: false },
+            { rank: 2, model: "Claude-3.7-Sonnet-4000", type: "Instr.", release: "Closed", score: 39.46, reasoning: true },
+            { rank: 3, model: "GPT-4.1", type: "Instr.", release: "Closed", score: 34.55, reasoning: false },
+            { rank: 4, model: "DeepSeek-R1", type: "Instr.", release: "Open", score: 34.52, reasoning: true },
+            { rank: 5, model: "DeepSeek-V3-0324", type: "Instr.", release: "Open", score: 32.89, reasoning: false },
+            { rank: 6, model: "o4-mini-high", type: "Instr.", release: "Closed", score: 28.99, reasoning: true },
+            { rank: 7, model: "Llama-3.1-405B-Instruct", type: "Instr.", release: "Open", score: 28.40, reasoning: false },
+            { rank: 8, model: "o4-mini-low", type: "Instr.", release: "Closed", score: 27.77, reasoning: true },
+            { rank: 9, model: "Qwen2.5-72B-Instruct", type: "Instr.", release: "Open", score: 27.61, reasoning: false },
+            { rank: 10, model: "Qwen2.5-32B-Instruct", type: "Instr.", release: "Open", score: 23.76, reasoning: false },
+            { rank: 11, model: "Qwen2.5-14B-Instruct", type: "Instr.", release: "Open", score: 20.75, reasoning: false },
+            { rank: 12, model: "OLMo-2-0325-32B-DPO", type: "Instr.", release: "Open", score: 19.80, reasoning: false },
+            { rank: 13, model: "Gemma-3-12B-IT", type: "Instr.", release: "Open", score: 18.62, reasoning: false },
+            { rank: 14, model: "Gemma-3-27B-IT", type: "Instr.", release: "Open", score: 18.33, reasoning: false },
+            { rank: 15, model: "OLMo-2-0325-32B-Instruct", type: "Instr.", release: "Open", score: 18.32, reasoning: false },
+            { rank: 16, model: "Llama-3.1-70B-Instruct", type: "Instr.", release: "Open", score: 16.56, reasoning: false },
+            { rank: 17, model: "OLMo-2-0325-32B", type: "Base", release: "Open", score: 15.90, reasoning: false },
+            { rank: 18, model: "Llama-3.1-Minitaur-8B", type: "Base", release: "Open", score: 14.50, reasoning: false },
+            { rank: 19, model: "OLMo-2-1124-13B", type: "Base", release: "Open", score: 13.83, reasoning: false },
+            { rank: 20, model: "Qwen2.5-72B", type: "Base", release: "Open", score: 13.34, reasoning: false },
+            { rank: 21, model: "Qwen2.5-32B", type: "Base", release: "Open", score: 12.27, reasoning: false },
+            { rank: 22, model: "Qwen2.5-14B", type: "Base", release: "Open", score: 11.92, reasoning: false },
+            { rank: 23, model: "OLMo-2-0325-32B-SFT", type: "Instr.", release: "Open", score: 11.28, reasoning: false },
+            { rank: 24, model: "OLMo-2-1124-13B-Instruct", type: "Instr.", release: "Open", score: 9.59, reasoning: false },
+            { rank: 25, model: "OLMo-2-1124-13B-DPO", type: "Instr.", release: "Open", score: 9.42, reasoning: false },
+            { rank: 26, model: "Qwen2.5-3B", type: "Base", release: "Open", score: 8.84, reasoning: false },
+            { rank: 27, model: "Qwen2.5-7B", type: "Base", release: "Open", score: 8.75, reasoning: false },
+            { rank: 28, model: "Llama-3.1-Centaur-70B", type: "Base", release: "Open", score: 8.54, reasoning: false },
+            { rank: 29, model: "Gemma-3-12B-PT", type: "Base", release: "Open", score: 7.66, reasoning: false },
+            { rank: 30, model: "Qwen2.5-7B-Instruct", type: "Instr.", release: "Open", score: 6.36, reasoning: false },
+            { rank: 31, model: "Gemma-3-27B-PT", type: "Base", release: "Open", score: 5.53, reasoning: false },
+            { rank: 32, model: "Qwen2.5-1.5B", type: "Base", release: "Open", score: 5.34, reasoning: false },
+            { rank: 33, model: "Llama-3.1-8B", type: "Base", release: "Open", score: 4.12, reasoning: false },
+            { rank: 34, model: "OLMo-2-1124-7B", type: "Base", release: "Open", score: 2.56, reasoning: false },
+            { rank: 35, model: "Llama-3.1-70B", type: "Base", release: "Open", score: 1.21, reasoning: false },
+            { rank: 36, model: "Llama-3.1-8B-Instruct", type: "Instr.", release: "Open", score: -0.15, reasoning: false, belowBaseline: true },
+            { rank: 37, model: "Gemma-3-4B-PT", type: "Base", release: "Open", score: -0.65, reasoning: false, belowBaseline: true },
+            { rank: 38, model: "Gemma-3-4B-IT", type: "Instr.", release: "Open", score: -1.91, reasoning: false, belowBaseline: true },
+            { rank: 39, model: "Qwen2.5-0.5B", type: "Base", release: "Open", score: -3.00, reasoning: false, belowBaseline: true },
+            { rank: 40, model: "OLMo-2-1124-7B-SFT", type: "Instr.", release: "Open", score: -11.36, reasoning: false, belowBaseline: true },
+            { rank: 41, model: "Qwen2.5-3B-Instruct", type: "Instr.", release: "Open", score: -12.04, reasoning: false, belowBaseline: true },
+            { rank: 42, model: "Gemma-3-1B-PT", type: "Base", release: "Open", score: -16.17, reasoning: false, belowBaseline: true },
+            { rank: 43, model: "OLMo-2-1124-7B-DPO", type: "Instr.", release: "Open", score: -19.62, reasoning: false, belowBaseline: true },
+            { rank: 44, model: "OLMo-2-1124-13B-SFT", type: "Instr.", release: "Open", score: -20.54, reasoning: false, belowBaseline: true },
+            { rank: 45, model: "OLMo-2-1124-7B-Instruct", type: "Instr.", release: "Open", score: -21.36, reasoning: false, belowBaseline: true }
+        ];
+
+        let filteredData = [...leaderboardData];
+
+        function updateStats() {
+            const visible = filteredData;
+            const totalModels = visible.length;
+            const topScore = visible.length > 0 ? Math.max(...visible.map(d => d.score)) : 0;
+            const avgScore = visible.length > 0 ? (visible.reduce((sum, d) => sum + d.score, 0) / visible.length).toFixed(2) : 0;
+
+            document.getElementById('totalModels').textContent = totalModels;
+            document.getElementById('topScore').textContent = topScore.toFixed(2);
+            document.getElementById('avgScore').textContent = avgScore;
+        }
+
+        function getRankBadgeClass(rank) {
+            if (rank === 1) return 'gold';
+            if (rank === 2) return 'silver';
+            if (rank === 3) return 'bronze';
+            return 'regular';
+        }
+
+        function renderTable() {
+            const tbody = document.getElementById('leaderboardBody');
+            tbody.innerHTML = '';
+
+            filteredData.forEach((item, index) => {
+                const row = document.createElement('tr');
+                
+                // Add striped class for alternating rows
+                if (index % 2 === 1) {
+                    row.classList.add('striped');
+                }
+                
+                // Add class for below baseline
+                if (item.belowBaseline) {
+                    row.classList.add('below-baseline');
+                }
+
+                // Rank column
+                const rankCell = document.createElement('td');
+                rankCell.style.textAlign = 'center';
+                rankCell.innerHTML = `<span class="rank-badge ${getRankBadgeClass(item.rank)}">${item.rank}</span>`;
+                row.appendChild(rankCell);
+
+                // Model name column
+                const nameCell = document.createElement('td');
+                nameCell.innerHTML = `<span class="model-name ${item.reasoning ? 'reasoning' : ''}">${item.model}</span>`;
+                row.appendChild(nameCell);
+
+                // Type column
+                const typeCell = document.createElement('td');
+                typeCell.innerHTML = `<span class="type-badge ${item.type === 'Instr.' ? 'instruct' : 'base'}">${item.type}</span>`;
+                row.appendChild(typeCell);
+
+                // Release column
+                const releaseCell = document.createElement('td');
+                releaseCell.innerHTML = `<span class="release-badge ${item.release.toLowerCase()}">${item.release}</span>`;
+                row.appendChild(releaseCell);
+
+                // Score column
+                const scoreCell = document.createElement('td');
+                scoreCell.style.textAlign = 'center';
+                scoreCell.innerHTML = `<span class="score-value ${item.score < 0 ? 'negative' : ''}">${item.score.toFixed(2)}</span>`;
+                row.appendChild(scoreCell);
+
+                tbody.appendChild(row);
+            });
+
+            updateStats();
+        }
+
+        function applyFilters() {
+            const typeFilter = document.getElementById('typeFilter').value;
+            const releaseFilter = document.getElementById('releaseFilter').value;
+            const sortFilter = document.getElementById('sortFilter').value;
+
+            // Filter data
+            filteredData = leaderboardData.filter(item => {
+                if (typeFilter !== 'all' && item.type !== typeFilter) return false;
+                if (releaseFilter !== 'all' && item.release !== releaseFilter) return false;
+                return true;
+            });
+
+            // Sort data
+            if (sortFilter === 'score') {
+                filteredData.sort((a, b) => b.score - a.score);
+            } else if (sortFilter === 'score-asc') {
+                filteredData.sort((a, b) => a.score - b.score);
+            } else if (sortFilter === 'name') {
+                filteredData.sort((a, b) => a.model.localeCompare(b.model));
+            } else if (sortFilter === 'name-desc') {
+                filteredData.sort((a, b) => b.model.localeCompare(a.model));
+            }
+
+            // Re-assign ranks based on filtered/sorted data
+            filteredData.forEach((item, index) => {
+                item.displayRank = index + 1;
+            });
+
+            renderTable();
+        }
+
+        // Event listeners
+        document.getElementById('typeFilter').addEventListener('change', applyFilters);
+        document.getElementById('releaseFilter').addEventListener('change', applyFilters);
+        document.getElementById('sortFilter').addEventListener('change', applyFilters);
+
+        // Initial render
+        renderTable();
+    </script>
+</body>
+</html>
